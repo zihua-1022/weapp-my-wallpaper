@@ -17,6 +17,7 @@ const config = {
     '@': pathResolve('src/'),
     '~': pathResolve('src/styles'),
     '~styles': pathResolve('src/styles'),
+    '@hooks': pathResolve('src/hooks'),
     '@components': pathResolve('src/components'),
     '@utils': pathResolve('src/utils'),
     '@service': pathResolve('src/service'),

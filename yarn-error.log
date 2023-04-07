@@ -1,25 +1,20 @@
 Arguments: 
-  C:\Program Files\nodejs\node.exe C:\Users\Nova005369\AppData\Roaming\npm\node_modules\yarn\bin\yarn.js start
+  C:\Program Files\nodejs\node.exe C:\Users\Nova005369\AppData\Roaming\npm\node_modules\yarn\bin\yarn.js add @tarojs/redux redux redux-thunk --save
 
 PATH: 
-  C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Windows\System32\OpenSSH\;C:\Pro;ram Files\PuTTY\;C:\Program Files\Microsoft VS Code\bin;C:\Program Files\Git\cmd;C:\npm-global;%NVM_HOME%;%NVM_SYMLINK%;C:\Program Files (x86)\Tencent\微信web开发者工具\dll;C:\Users\Nova005369\AppData\Local\Microsoft\WindowsApps;C:\Users\Defprof\AppData\Roaming\npm;C:\Users\Nova005369\AppData\Roaming\npm\yarn;C:\Users\Nova005369\AppData\Roaming\npm\node_modules\yarn\bin;C:\Users\Nova005369\AppData\Roaming\nvm;C:\Program Files\nodejs
+  C:\windows\system32;C:\windows;C:\windows\System32\Wbem;C:\windows\System32\WindowsPowerShell\v1.0\;C:\windows\System32\OpenSSH\;C:\Program Files\nodejs\;C:\Program Files\nodejs\node_global\node_modules;C:\Program Files\Git\cmd;C:\Program Files\Microsoft VS Code\bin;E:\software\wechatDevtools\dll;C:\Users\Nova005369\AppData\Roaming\npm\node_modules\yarn\bin;C:\Users\Nova005369\AppData\Local\Microsoft\WindowsApps;
 
 Yarn version: 
   1.22.19
 
 Node version: 
-  16.18.0
+  16.15.1
 
 Platform: 
   win32 x64
 
 Trace: 
-  SyntaxError: D:\learnProject\applet-resource\weapp-my-wallpaper\package.json: Unexpected token / in JSON at position 200
-      at JSON.parse (<anonymous>)
-      at C:\Users\Nova005369\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:1629:59
-      at Generator.next (<anonymous>)
-      at step (C:\Users\Nova005369\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:310:30)
-      at C:\Users\Nova005369\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:321:13
+  Error: EPERM: operation not permitted, unlink 'D:\applet-resource\weapp-my-wallpaper\node_modules\@swc\core-win32-x64-msvc\swc.win32-x64-msvc.node'
 
 npm manifest: 
   {
@@ -32,7 +27,6 @@ npm manifest:
       "typescript": true,
       "css": "less"
     },
-    // "type": "module",
     "scripts": {
       "build:weapp": "taro build --type weapp",
       "build:swan": "taro build --type swan",

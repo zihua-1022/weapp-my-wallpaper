@@ -28,6 +28,9 @@
       "@/*":[
         "src/*"
       ],
+      "@hooks/*":[
+        "src/hooks/*"
+      ],
       "@components/*":[
         "src/components/*"
       ],

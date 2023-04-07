@@ -1,6 +1,8 @@
 const tabBarConfig = {
-  // custom: true,
-  // selectedColor: "#FF0000",
+  custom: true,
+  color: "rgba(68, 68, 68, 1)",
+  selectedColor: "rgba(68, 68, 68, 1)",
+  backgroundColor: "white",
   list: [
     {
       pagePath: "pages/home/index",

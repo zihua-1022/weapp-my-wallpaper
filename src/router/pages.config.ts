@@ -1,6 +1,6 @@
 const pagesConfig = [
-  "pages/category/index",
   "pages/home/index",
+  "pages/category/index",
   "pages/collect/index",
   "pages/profile/index",
 ];

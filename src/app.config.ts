@@ -3,11 +3,13 @@ const routerConfig = require("./router");
 export default defineAppConfig({
   pages: routerConfig.pagesConfig,
   tabBar: routerConfig.tabBarConfig,
+  usingComponents: {},
   window: {
-    backgroundTextStyle: "light",
-    backgroundColor: "#2A2C2C",
-    navigationBarBackgroundColor: "#2A2C2C",
+    backgroundTextStyle: "dark",
+    backgroundColor: "#202123",
+    navigationBarBackgroundColor: "#202123",
     navigationBarTitleText: "WeChat",
     navigationBarTextStyle: "black",
+    navigationStyle: "custom",
   },
 });
