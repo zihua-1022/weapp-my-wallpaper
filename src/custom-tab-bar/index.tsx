@@ -1,11 +1,15 @@
 import React, { useState, PropsWithChildren } from "react";
-import { View, Text, Image } from "@tarojs/components";
 import Taro from "@tarojs/taro";
+import { View, Text, Image } from "@tarojs/components";
+import { useSelector, useDispatch } from "react-redux";
+import { RootState } from "../store";
+import { setCurrentTab } from "../store/tabBar";
 
 import "./index.less";
 
 const CustomTabBar = (): JSX.Element => {
-  const [currentTab, setCurrentTab] = useState<number>(0);
+  const dispatch = useDispatch();
+  const currentTab = useSelector((state: RootState) => state.tabBar.currentTab);
   const tabBarConfig = {
     selected: currentTab,
     color: "rgba(68, 68, 68, 1)",
@@ -46,8 +50,7 @@ const CustomTabBar = (): JSX.Element => {
     if (currentTab === selectedKey) {
       return;
     }
-    setCurrentTab(selectedKey);
-    console.log(currentTab, "selectedKey: ", selectedKey);
+    dispatch(setCurrentTab(selectedKey));
     Taro.switchTab({
       url: tabBarConfig.list[selectedKey].pagePath,
     });
@@ -56,16 +59,13 @@ const CustomTabBar = (): JSX.Element => {
   return (
     <View className="custom-tab-bar">
       <View className="tab-bar-fixed">
-        {tabBarConfig.list.map((item, index) => {
+        {tabBarConfig.list.map((item) => {
           return (
             <View
               className="tab-bar-item"
               key={item.key}
               onClick={() => switchTabBar(item.key)}
             >
-              {item.key === currentTab ? "true" : "false"}
-              {currentTab}
-              {item.key}
               <Image
                 className="icon"
                 src={
