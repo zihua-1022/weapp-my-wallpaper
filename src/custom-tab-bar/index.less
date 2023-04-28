@@ -1,0 +1,32 @@
+.custom-tab-bar{
+  .tab-bar{
+    &-fixed{
+      width: calc(100% - 150px);
+      height: 88px;
+      display: flex;
+      // padding-bottom: 60px;
+      position: fixed;
+      bottom: 60px;
+      left: 75px;
+      opacity: 0.5;
+      border-radius: 40px;
+      background-color: #47494e;
+    }
+    &-item{
+      display: flex;
+      flex: 1;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      text-align: center;
+
+      .icon{
+        width: 70px;
+        height: 60px;
+      }
+      .text{
+        font-size: 28px;
+      }
+    }
+  }
+}
