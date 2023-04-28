@@ -8,21 +8,29 @@ import {
   Image,
   Text,
 } from "@tarojs/components";
+import { IImgResultModel } from "@/api/model/baseModel";
 // import Swiper from "../Swiper";
-import img1 from "@assets/img/kobe.png";
+// import img1 from "@assets/img/kobe.png";
 
 import styles from "./index.module.less";
 
 export type IImgProps = {
-  id: string;
-  path: string;
+  id: number;
+  name: string;
   desc?: string;
-  tag?: string;
+  size?: number;
+  resolution: string;
+  type: number;
+  tags?: string;
+  daily_recommend: number;
+  is_hot?: number;
+  path: string;
   alt?: string;
+  style?: {};
 };
 
 export interface ISlideTabsProps {
-  dataSource: IImgProps[];
+  dataSource: IImgResultModel[];
   activeTabKey: string;
   changeTab: (tabKey: number) => void;
   style?: {};
@@ -30,13 +38,14 @@ export interface ISlideTabsProps {
 }
 
 const SlideTabs: React.FC<ISlideTabsProps & PropsWithChildren> = (props) => {
-  const { activeTabKey, dataSource, changeTab, children } = props;
+  const { activeTabKey, dataSource, changeTab, children, style } = props;
 
   return (
     <View className={styles["slide-tabs"]}>
       {/* <!-- tabBar选项卡 --> */}
 
       <ScrollView
+        style={style}
         className={styles["slide-box"]}
         enhanced
         // paging-enabled
@@ -47,11 +56,12 @@ const SlideTabs: React.FC<ISlideTabsProps & PropsWithChildren> = (props) => {
       >
         {dataSource.length &&
           dataSource.map((item, index) => {
+            console.log(activeTabKey, "item: ", item);
             return (
               <View
                 className={styles["slide-tabs-item"]}
                 key={item.id}
-                id={item.id}
+                id={item.key}
                 onClick={() => changeTab(index)}
               >
                 {/* <View
@@ -67,11 +77,13 @@ const SlideTabs: React.FC<ISlideTabsProps & PropsWithChildren> = (props) => {
                 />
                 <Text
                   className={classNames(
-                    item.id === activeTabKey ? styles["slide-tabs-active"] : "",
+                    item.key === activeTabKey
+                      ? styles["slide-tabs-active"]
+                      : "",
                     styles["slide-tabs-text"]
                   )}
                 >
-                  {item.tag}
+                  {item.name}
                 </Text>
               </View>
             );

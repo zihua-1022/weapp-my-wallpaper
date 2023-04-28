@@ -1,15 +1,23 @@
 import React, { PropsWithChildren } from "react";
 import { Swiper, SwiperItem, SwiperProps, Image } from "@tarojs/components";
 
-export interface IimgProps {
+export interface IImgProps {
   id: number;
+  name: string;
+  desc?: string;
+  size?: number;
+  resolution: string;
+  type: number;
+  tags?: string;
+  daily_recommend: number;
+  is_hot?: number;
   path: string;
   alt?: string;
   style?: {};
 }
 
 export interface IswiperProps {
-  dataSource: IimgProps[];
+  dataSource: IImgProps[];
 }
 
 const Swipers: React.FC<SwiperProps & IswiperProps> = (props) => {

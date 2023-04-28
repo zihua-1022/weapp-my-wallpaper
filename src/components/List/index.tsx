@@ -1,7 +1,7 @@
 import React, { PropsWithChildren } from "react";
 import { View, Text, Image } from "@tarojs/components";
 import { AtList, AtListItem } from "taro-ui";
-import img1 from "@assets/img/测试1.jpg";
+// import img1 from "@assets/img/测试1.jpg";
 
 import "./index.less";
 
