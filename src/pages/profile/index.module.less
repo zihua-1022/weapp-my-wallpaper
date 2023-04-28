@@ -1,0 +1,40 @@
+.profile{
+  padding: 28px;
+  &-header{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    .image,.text{
+      vertical-align: middle;
+    }
+    .image{
+      width: 140px;
+      height: 140px;
+    }
+    .text{
+      margin-left: 40px;
+      color: #fff;
+    }
+    .desc{
+      margin-right: 10px;
+      font-size: 24px;
+      color: #fff;
+    }
+  }
+  &-main{
+    .card-content{
+      overflow: hidden;
+      height: 50px;
+      line-height: 50px;
+      .icon,.desc{
+        float: left;
+        display: inline-block;
+        // width: 50%;
+        /* 设置子元素宽度为50% */
+        // margin-right: -4px;
+        /* 去除子元素之间的间距 */
+        box-sizing: border-box;
+      }
+    }
+  }
+}
