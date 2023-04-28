@@ -118,24 +118,24 @@ class Service {
     );
   }
 
-  request = <T>(config: AxiosRequestConfig): Promise<T> => {
-    return new Promise((resolve, reject) => {
-      this.instance
-        .request<T>(config)
-        .then((res) => {
-          resolve(res as T);
-        })
-        .catch((err: AxiosError) => {
-          reject(err);
-        });
-    });
-  };
+  // request = <T>(config: AxiosRequestConfig): Promise<T> => {
+  //   return new Promise((resolve, reject) => {
+  //     this.instance
+  //       .request<T>(config)
+  //       .then((res) => {
+  //         resolve(res as T);
+  //       })
+  //       .catch((err: AxiosError) => {
+  //         reject(err);
+  //       });
+  //   });
+  // };
 }
 
 const service = new Service();
 
 // 封装发送请求的方法，返回 Promise 对象
-export const request = <T>(
+export const request = <T = any>(
   config: AxiosRequestConfig
 ): Promise<IResultData<T>> => {
   return new Promise((resolve, reject) => {
