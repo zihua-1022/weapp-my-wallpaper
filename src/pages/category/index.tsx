@@ -1,27 +1,26 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
+import { useSelector } from "react-redux";
 import classNames from "classnames";
-import {
-  View,
-  Text,
-  Swiper,
-  SwiperItem,
-  NavigationBar,
-  PageMeta,
-} from "@tarojs/components";
-import { AtButton, AtTabBar } from "taro-ui";
 import Taro from "@tarojs/taro";
-import SlideTabs from "@components/SlideTabs";
+import { View, Swiper, SwiperItem } from "@tarojs/components";
+import CustomNavBar from "@components/CustomNavBar";
+import SlideTabs, { IImgProps } from "@components/SlideTabs";
 import ImageCard from "@components/ImageCard";
-import { categoryData, ICategoryDataProps, ICategory } from "./data";
+import { imgsListToTree } from "@utils/tools";
+import { getCategoryTabs, getCategoryImage } from "@/api/category";
+import { serverMap } from "@/services/config";
+import { RootState } from "@store/index";
+import { IImgResultModel } from "@/api/model/baseModel";
+// import { categoryData, ICategoryDataProps, ICategory } from "./data";
 // import "taro-ui/dist/style/components/button.scss"; // 按需引入
-import "./index.less";
+import styles from "./index.module.less";
 
 function Category() {
+  const navBarStyle = useSelector((state: RootState) => state.navBar);
+  const [swiperHeight, setSwiperHeight] = useState<number[]>([]);
+  const swiperItem = useRef(null);
   const [currentTab, setCurrentTab] = useState<number>(0);
-  const toBlogPage = () => {
-    Taro.navigateTo({ url: "/pages/blog/index?blogTitle=" });
-  };
-  const [imgData, setImgData] = useState<ICategory[]>([]);
+  const [tabsData, setTabsData] = useState<IImgResultModel[]>([]);
   const swiperChange = (e) => {
     setCurrentTab(e.detail.current);
   };
@@ -30,59 +29,97 @@ function Category() {
   };
 
   useEffect(() => {
-    setImgData(categoryData);
+    // getCategoryTabs().then((res) => {
+    //   const { status, data } = res;
+    //   if (status) {
+    //     const result = data.map((item, index) => {
+    //       const proxy = serverMap[process.env.NODE_ENV || "default"]["static"];
+    //       item.path = proxy + "/" + item.path;
+    //       item.key = `tab_${index}`;
+    //       return {
+    //         ...item,
+    //       };
+    //     });
+    //     setTabsData(result);
+    //   }
+    // });
+    getCategoryImage().then((res) => {
+      const { status, data } = res;
+      if (status) {
+        const result = data.map((item, index) => {
+          const proxy = serverMap[process.env.NODE_ENV || "default"]["static"];
+          return {
+            ...item,
+            path: proxy + "/" + item.path,
+            key: `tab_${index}`,
+          };
+        });
+        const imgsTree = imgsListToTree(result);
+        console.log(data, "item: ", imgsTree);
+        setTabsData(imgsTree);
+      }
+    });
+    // categoryData.forEach((item) => {
+    //   const itemHeight = Math.ceil(item.data.length / 3) * 216 + 65;
+    //   const rHeight =
+    //     navBarStyle.windowHeight > itemHeight
+    //       ? navBarStyle.windowHeight - navBarStyle.totalHeight
+    //       : itemHeight;
+    //   swiperHeight.push(rHeight);
+    // });
+    // setTabsData(categoryData);
   }, []);
 
   return (
-    <View
-      className="category"
-      style={{
-        height: "100%",
-
-        // padding: "20rpx 28rpx 0",
-        // backgroundColor: "#2A2C2C",
-      }}
-    >
-      <SlideTabs
-        dataSource={imgData}
-        activeTabKey={`tab_${currentTab}`}
-        changeTab={setCurrentTab}
+    <View className={classNames("app", styles["category"])}>
+      <CustomNavBar />
+      <View
+        className={classNames("app-main", styles["category-main"])}
+        // style={{
+        //   height: `calc(100vh - ${navBarStyle.totalHeight}px)`,
+        //   // marginTop: `${navBarStyle.totalHeight}px`,
+        //   overflowY: "auto",
+        // }}
       >
+        <SlideTabs
+          dataSource={tabsData}
+          activeTabKey={`tab_${currentTab}`}
+          changeTab={setCurrentTab}
+          style={{ top: `${navBarStyle.totalHeight}px` }}
+        ></SlideTabs>
         <Swiper
           style={{
-          height: "calc(100vh - 62px)",
-          marginTop: "62px",
-          overflow:"auto",
-        }}
-          className="slide-content"
+            height: `${swiperHeight[currentTab]}px`,
+          }}
+          className={styles["slide-content"]}
           current={currentTab}
           onChange={swiperChange}
           onTransition={swiperTransition}
           easing-function="easeOutCubic"
-          
         >
-          {imgData.length &&
-            imgData.map((item,index) => {
+          {tabsData.length &&
+            tabsData.map((item, index) => {
               return (
-                <SwiperItem className={classNames("swiper-item",{"active":currentTab===index})} key={item.id}>
-                  <ImageCard dataSource={item.data} style={{padding: "0 14px"}}  imgStyle={{height: "200px",}} />
+                <SwiperItem
+                  className={classNames("swiper-item", {
+                    [styles["active"]]: currentTab === index,
+                  })}
+                  key={item.id}
+                >
+                  <ImageCard
+                    // ref={}
+                    className="image-card"
+                    dataSource={item.children}
+                    style={{
+                      padding: "0 14px 14px",
+                    }}
+                    imgStyle={{ height: "200px" }}
+                  />
                 </SwiperItem>
               );
             })}
         </Swiper>
-      </SlideTabs>
-      {/* <AtTabBar
-        fixed
-        tabList={[
-          { title: "0", iconType: "home" },
-          { title: "1", text: 8 },
-          { title: "2", iconType: "heart" },
-          { title: "3", text: "new" },
-          { title: "4", dot: true },
-        ]}
-        onClick={handleClick}
-        current={current}
-      /> */}
+      </View>
     </View>
   );
 }

@@ -21,30 +21,36 @@
     "typeRoots": [
       "node_modules/@types"
     ],
-    "paths":{
-      "@@/*":[
+    "paths": {
+      "@@/*": [
         "./*"
       ],
-      "@/*":[
+      "@/*": [
         "src/*"
       ],
-      "@hooks/*":[
+      "@hooks/*": [
         "src/hooks/*"
       ],
-      "@components/*":[
+      "@store/*": [
+        "src/store/*"
+      ],
+      "@components/*": [
         "src/components/*"
       ],
-      "@utils/*":[
+      "@utils/*": [
         "src/utils/*"
       ],
-      "@service/*":[
-        "src/service/*"
+      "@services/*": [
+        "src/services/*"
       ],
-      "@assets/*":[
+      "@assets/*": [
         "src/assets/*"
       ]
     },
   },
-  "include": ["./src", "./types"],
+  "include": [
+    "./src",
+    "./types"
+  ],
   "compileOnSave": false
 }
