@@ -46,17 +46,27 @@ function Category() {
     getCategoryImage().then((res) => {
       const { status, data } = res;
       if (status) {
-        const result = data.map((item, index) => {
+        const result = data.map((item) => {
           const proxy = serverMap[process.env.NODE_ENV || "default"]["static"];
           return {
             ...item,
             path: proxy + "/" + item.path,
-            key: `tab_${index}`,
           };
         });
         const imgsTree = imgsListToTree(result);
-        console.log(data, "item: ", imgsTree);
+        const totalHeight: number[] = [];
+        imgsTree.forEach((item, index) => {
+          item.key = `tab_${index}`;
+          const itemHeight = Math.ceil(item.children.length / 3) * 216 + 65;
+          const rHeight =
+            navBarStyle.windowHeight > itemHeight
+              ? navBarStyle.windowHeight - navBarStyle.totalHeight
+              : itemHeight;
+          totalHeight.push(rHeight);
+        });
         setTabsData(imgsTree);
+        console.log("imgsTree: ", imgsTree);
+        setSwiperHeight(totalHeight);
       }
     });
     // categoryData.forEach((item) => {
@@ -100,12 +110,7 @@ function Category() {
           {tabsData.length &&
             tabsData.map((item, index) => {
               return (
-                <SwiperItem
-                  className={classNames("swiper-item", {
-                    [styles["active"]]: currentTab === index,
-                  })}
-                  key={item.id}
-                >
+                <SwiperItem className="swiper-item" key={item.id}>
                   <ImageCard
                     // ref={}
                     className="image-card"

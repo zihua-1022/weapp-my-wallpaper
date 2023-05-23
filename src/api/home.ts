@@ -10,14 +10,14 @@ import {
 
 export const getDailyRecommend = async () => {
   return request<IImgProps[]>({
-    url: "weapp/home/image-recommend",
+    url: "weapp/v1/home/image-recommend",
     method: "get",
   });
 };
 
 export const getDailyPopular = async () => {
   return request<IImgProps[]>({
-    url: "weapp/home/image-popular",
+    url: "weapp/v1/home/image-popular",
     method: "get",
   });
 };

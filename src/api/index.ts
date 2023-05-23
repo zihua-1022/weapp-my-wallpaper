@@ -15,12 +15,12 @@ import {
 } from "./model/baseModel";
 
 export const weappLoginApi = async (avatarUrl: string) => {
-  // const { code } = await Taro.login();
-  // console.log("code: ", code);
+  const { code } = await Taro.login();
+  // console.log("0a1peXFa12pHbF0EKQGa1HHZ9P0peXFD: ", code);
   return request<ILoginResultModel>({
-    url: "weapp/account/weapp-login",
+    url: "weapp/v1/account/weapp-login",
     method: "post",
-    data: { code: "0a1peXFa12pHbF0EKQGa1HHZ9P0peXFD", avatarUrl },
+    data: { code, avatarUrl },
   });
 };
 
@@ -29,7 +29,7 @@ export const loginApi = async (params) => {
   // const { code } = await Taro.login();
   // console.log("code: ", code);
   return request<ILoginResultModel>({
-    url: "weapp/account/login",
+    url: "weapp/v1/account/login",
     method: "post",
     data: params,
   });
@@ -42,7 +42,7 @@ export const getToken = async (params: {}) => {
     token: string;
     user_id: string;
   }>({
-    url: "weapp/account/auth/token",
+    url: "weapp/v1/account/auth/token",
     method: "post",
     data: params,
   });
@@ -53,14 +53,14 @@ export const getWeappToken = () => {
     access_token: string;
     expires_in: number;
   }>({
-    url: "weapp/account/auth/weapp-token",
+    url: "weapp/v1/account/auth/weapp-token",
     method: "get",
   });
 };
 
 export const getOpenId = async (param: {}) => {
   return request({
-    url: "weapp/auth/openid",
+    url: "weapp/v1/auth/openid",
     method: "post",
     // showLoading: true,
     data: param,

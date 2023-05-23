@@ -18,8 +18,8 @@ export interface IStatusCode {
 
 export const serverMap = {
   development: {
-    weapp: "http://10.40.60.188:3000",
-    static: "http://10.40.60.188:3000",
+    weapp: "https://m.zihua1022.icu",
+    static: "https://m.zihua1022.icu",
   },
   production: {
     weapp: "http://10.40.60.188:3000",

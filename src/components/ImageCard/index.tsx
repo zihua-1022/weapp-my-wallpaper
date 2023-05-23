@@ -1,6 +1,7 @@
 import React, { PropsWithChildren, MutableRefObject } from "react";
 import { View, Text, Image } from "@tarojs/components";
 import { AtGrid } from "taro-ui";
+import { IImgResultModel } from "@/api/model/baseModel";
 import classNames from "classnames";
 
 import "./index.less";
@@ -12,7 +13,7 @@ export interface IimgProps {
 }
 
 export interface IswiperProps {
-  dataSource: IimgProps[];
+  dataSource: IImgResultModel[];
   className?: string;
   style?: {};
   imgStyle?: {};

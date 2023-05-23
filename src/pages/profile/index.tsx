@@ -7,7 +7,7 @@ import CustomNavBar from "@components/CustomNavBar";
 import ImageCard from "@components/ImageCard";
 import Card from "@components/Card";
 // import { getUserInfo } from "@/api/profile";
-import { getUserInfoAuth, weappLogin } from "@utils/weapp";
+import { getUserInfoAuth, weappLogin, weappLogout } from "@utils/weapp";
 import { RootState } from "@store/index";
 
 // import img1 from "@assets/img/kobe.png";
@@ -54,12 +54,12 @@ const Profile: React.FC = () => {
       {
         id: 1,
         leftIcon: "success",
-        content: "login",
+        content: "关于我们",
       },
       {
         id: 2,
         leftIcon: "success_no_circle",
-        content: "联系我们",
+        content: "退出登录",
       },
     ]);
     console.log(111122);
@@ -115,7 +115,10 @@ const Profile: React.FC = () => {
             cardDataSource.map((item) => {
               return (
                 <Card key={item.id} style={{ marginTop: "10px" }}>
-                  <View className={styles["card-content"]}>
+                  <View
+                    className={styles["card-content"]}
+                    onClick={weappLogout}
+                  >
                     <Icon
                       className={styles["icon"]}
                       size="25"

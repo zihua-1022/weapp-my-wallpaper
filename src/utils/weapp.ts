@@ -86,3 +86,14 @@ export const getUserInfoAuth = (): Promise<IUserProfile> => {
 
   // 如果用户未授权获取用户信息，则弹窗提示用户授权
 };
+
+export const weappLogout = (): Promise<any> => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      Taro.removeStorageSync("userInfo");
+      resolve("");
+    } catch ({ errMsg }) {
+      reject(new Error(errMsg));
+    }
+  });
+};

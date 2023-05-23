@@ -5,14 +5,14 @@ import { IImgResultModel } from "./model/baseModel";
 
 export const getCategoryImage = async () => {
   return request<IImgResultModel[]>({
-    url: "weapp/category/image",
+    url: "weapp/v1/category/image",
     method: "get",
   });
 };
 
 export const getCategoryTabs = async () => {
   return request<IImgResultModel[]>({
-    url: "weapp/category/image-tabs",
+    url: "weapp/v1/category/image-tabs",
     method: "get",
   });
 };

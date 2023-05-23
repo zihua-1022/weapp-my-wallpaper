@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import { RootState } from "@store/index";
 import classNames from "classnames";
 import Taro from "@tarojs/taro";
-import { View, Text } from "@tarojs/components";
+import { View, Text, Button } from "@tarojs/components";
 import SearchBox from "@components/SearchBox";
 import CustomNavBar from "@components/CustomNavBar";
 import ImageCard from "@components/ImageCard";
@@ -17,6 +17,7 @@ import styles from "./index.module.less";
 
 const Collect: React.FC = () => {
   const navBarStyle = useSelector((state: RootState) => state.navBar);
+  const userInfo = useSelector((state: RootState) => state.profile);
 
   const handleSearch = (keyword: string) => {
     console.log(`搜索关键词：${keyword}`);
@@ -36,14 +37,31 @@ const Collect: React.FC = () => {
         //   }
         // }
       >
-        <ImageCard
+        {userInfo.user_id && (
+          <View
+            style={{
+              textAlign: "center",
+              color: "#fff",
+            }}
+          >
+            暂无收藏
+          </View>
+        )}
+        {!userInfo.user_id && (
+          <Button
+            style={{
+              textAlign: "center",
+              backgroundColor: "#000",
+              color: "#fff",
+            }}
+          >
+            请先登录！
+          </Button>
+        )}
+
+        {/* <ImageCard
           dataSource={
             [
-              // { id: 1, path: img1 },
-              // { id: 2, path: img2 },
-              // { id: 3, path: img3 },
-              // { id: 4, path: img4 },
-              // { id: 5, path: img5 },
             ]
           }
           style={{
@@ -53,7 +71,7 @@ const Collect: React.FC = () => {
             height: "180px",
             borderRadius: "10px",
           }}
-        />
+        /> */}
       </View>
     </View>
   );
