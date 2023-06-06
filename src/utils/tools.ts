@@ -1,12 +1,12 @@
-import Taro from "@tarojs/taro";
-import { IImgResultModel } from "@/api/model/baseModel";
+import { ICategoryResult } from "@/api/model/categoryModel";
+import { IPcImgResult } from "@/api/model/computerModel";
 
-// interface IIsMobile{
-//   ()=>void
-// }
+export type TImgsTreeData = ICategoryResult & {
+  children: IPcImgResult[];
+};
 
 export const isDev = (system: string) => {
-  return ["development"].includes(system);
+  return ["development", "dev"].includes(system);
 };
 
 export const isMobile = (system: string) => {
@@ -18,8 +18,8 @@ export const isWeapp = (system: string) => {
 };
 
 // 需要深拷贝
-export const imgsListToTree = (lists: IImgResultModel[]): IImgResultModel[] => {
-  const array: IImgResultModel[] = [];
+export const imgsListToTree = (lists: IPcImgResult[]): TImgsTreeData[] => {
+  const array: TImgsTreeData[] = [];
   lists.forEach((item) => {
     // 遍历对象数组
     item.children = lists.filter(
@@ -31,6 +31,42 @@ export const imgsListToTree = (lists: IImgResultModel[]): IImgResultModel[] => {
   });
   return array; //循环结束，返回结果
 };
+
+export const imgsListToTree2 = (lists: IPcImgResult[]): TImgsTreeData[] => {
+  const preList: TImgsTreeData[] = [];
+  const treeData = lists.reduce((pre, cur) => {
+    const existedNode = pre.find((node) => node.mid === cur.mid);
+    if (existedNode) {
+      existedNode.children.push(cur);
+    } else {
+      const { mid, cTitle, cDesc } = cur;
+      pre.push({
+        mid,
+        cTitle,
+        cDesc,
+        children: [cur],
+      });
+    }
+    return pre;
+  }, preList);
+  return treeData; //循环结束，返回结果
+};
+// // 定义一个辅助函数，用于根据 mid 对数据进行分组
+// function groupDataByMid(data) {
+//   const groupedData = {};
+//   for (const item of data) {
+//     const { mid, img_desc } = item;
+//     if (groupedData[mid]) {
+//       groupedData[mid].children.push(item);
+//     } else {
+//       groupedData[mid] = {
+//         desc: img_desc,
+//         children: [item]
+//       };
+//     }
+//   }
+//   return Object.values(groupedData);
+// }
 
 /**
  * 分析 url 地址，将解析的结果作为对象返回，返回属性有：

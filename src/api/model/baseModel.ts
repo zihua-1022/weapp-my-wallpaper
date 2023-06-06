@@ -33,21 +33,19 @@ export interface IPageResultModel<T> {
   total: number;
 }
 
-export interface IImgResultModel {
-  key?: string;
+export interface IBaseImgResult {
   id: number;
-  name: string;
-  desc?: string;
-  type?: string;
-  size?: number;
-  resolution?: string;
-  tags?: string;
+  imgDesc?: string;
+  imgName: string;
+  imgResolution?: string;
+  imgSize?: number;
+  imgTags?: string;
+  imgType?: string;
+  isHot: number;
+  isPhone: number;
+  isPrimary: number;
+  isRecommend: number;
   path: string;
-  is_recommend: number;
-  is_hot?: number;
-  is_primary?: number;
-  category_id?: number;
-  children?: [];
-  alt?: string;
-  style?: {};
+  createdAt?: string;
+  updatedAt?: string;
 }

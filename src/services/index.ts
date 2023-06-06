@@ -8,7 +8,7 @@ import {
 import Taro from "@tarojs/taro";
 import { IResultData } from "@/api/model/baseModel";
 import { serverMap, urlTools } from "./config";
-import { isWeapp, isDev, parseURL } from "../utils/tools";
+import { isWeapp } from "../utils/tools";
 
 const headers = {
   "X-Requested-With": "XMLHttpRequest",

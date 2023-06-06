@@ -1,7 +1,7 @@
 import Taro from "@tarojs/taro";
 import { getToken, getWeappToken, getOpenId } from "@/api/index";
 import store from "@store/index";
-import { setUserInfo } from "@/store/profile";
+import { initialState, setUserInfo } from "@/store/profile";
 
 export interface IUserProfile {
   encryptedData: string;
@@ -91,6 +91,7 @@ export const weappLogout = (): Promise<any> => {
   return new Promise(async (resolve, reject) => {
     try {
       Taro.removeStorageSync("userInfo");
+      store.dispatch(setUserInfo(initialState));
       resolve("");
     } catch ({ errMsg }) {
       reject(new Error(errMsg));

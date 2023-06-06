@@ -38,9 +38,9 @@ export const loginApi = async (params) => {
 export const getToken = async (params: {}) => {
   return request<{
     avatar: string;
-    nickname: string;
+    nickName: string;
     token: string;
-    user_id: string;
+    userId: string;
   }>({
     url: "weapp/v1/account/auth/token",
     method: "post",
