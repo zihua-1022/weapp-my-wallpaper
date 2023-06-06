@@ -1,13 +1,14 @@
-import React, { useState, PropsWithChildren } from "react";
+import React, { PropsWithChildren } from "react";
 import Taro from "@tarojs/taro";
 import { View, Text, Image } from "@tarojs/components";
 import { useSelector, useDispatch } from "react-redux";
+import { getTabBarImg } from "@assets/img/tabBar";
 import { RootState } from "../store";
 import { setCurrentTab } from "../store/tabBar";
 
 import "./index.less";
 
-const CustomTabBar = (): JSX.Element => {
+const CustomTabBar: React.FC<PropsWithChildren> = () => {
   const dispatch = useDispatch();
   const currentTab = useSelector((state: RootState) => state.tabBar.currentTab);
   const tabBarConfig = {
@@ -19,29 +20,25 @@ const CustomTabBar = (): JSX.Element => {
         key: 0,
         pagePath: "/pages/home/index",
         text: "",
-        iconPath: "../assets/img/tabBar/home.png",
-        selectedIconPath: "../assets/img/tabBar/collect.png",
+        ...getTabBarImg("home"),
       },
       {
         key: 1,
-        pagePath: "/pages/category/index",
+        pagePath: "/pages/mobile/index",
         text: "",
-        iconPath: "../assets/img/tabBar/collect.png",
-        selectedIconPath: "../assets/img/tabBar/profile.png",
+        ...getTabBarImg("mobile"),
       },
       {
         key: 2,
-        pagePath: "/pages/collect/index",
+        pagePath: "/pages/computer/index",
         text: "",
-        iconPath: "../assets/img/tabBar/sort.png",
-        selectedIconPath: "../assets/img/tabBar/profile.png",
+        ...getTabBarImg("pc"),
       },
       {
         key: 3,
         pagePath: "/pages/profile/index",
         text: "",
-        iconPath: "../assets/img/tabBar/profile.png",
-        selectedIconPath: "../assets/img/tabBar/home.png",
+        ...getTabBarImg("profile"),
       },
     ],
   };

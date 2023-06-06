@@ -8,9 +8,9 @@
       position: fixed;
       bottom: 60px;
       left: 75px;
-      opacity: 0.5;
       border-radius: 40px;
-      background-color: #47494e;
+      background-color: rgba(0,0,0,0.3);
+      backdrop-filter: blur(20px); /* 使用高斯模糊作为背景滤镜 */
     }
     &-item{
       display: flex;
@@ -21,8 +21,8 @@
       text-align: center;
 
       .icon{
-        width: 70px;
-        height: 60px;
+        width: 60px;
+        height: 55px;
       }
       .text{
         font-size: 28px;

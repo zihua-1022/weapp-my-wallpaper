@@ -7,7 +7,14 @@ import logo from "@assets/img/logo.png";
 
 import "./index.less";
 
-const CustomNavBar: React.FC<PropsWithChildren> = ({ children }) => {
+export interface ICustomNavBarProps extends PropsWithChildren {
+  isShowLogo?: boolean;
+}
+
+const CustomNavBar: React.FC<ICustomNavBarProps> = ({
+  isShowLogo = true,
+  children,
+}) => {
   const navBarStyle = useSelector((state: RootState) => state.navBar);
   return (
     // <View
@@ -31,7 +38,7 @@ const CustomNavBar: React.FC<PropsWithChildren> = ({ children }) => {
           width: `${navBarStyle.windowWidth}px`,
         }}
       >
-        <Image className="bar-icon" src={logo}></Image>
+        {isShowLogo && <Image className="bar-icon" src={logo}></Image>}
         {children}
       </View>
     </View>

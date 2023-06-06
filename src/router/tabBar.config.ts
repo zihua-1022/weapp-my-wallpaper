@@ -11,7 +11,7 @@ const tabBarConfig = {
       selectedIconPath: "assets/img/tabBar/home_selected.png",
     },
     {
-      pagePath: "pages/category/index",
+      pagePath: "pages/mobile/index",
       iconPath: "assets/img/tabBar/mobile.png",
       selectedIconPath: "assets/img/tabBar/mobile_selected.png",
     },
