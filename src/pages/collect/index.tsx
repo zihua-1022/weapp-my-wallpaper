@@ -7,11 +7,6 @@ import { View, Text, Button } from "@tarojs/components";
 import SearchBox from "@components/SearchBox";
 import CustomNavBar from "@components/CustomNavBar";
 import ImageCard from "@components/ImageCard";
-// import img1 from "@assets/img/kobe.png";
-// import img2 from "@assets/img/测试2.jpg";
-// import img3 from "@assets/img/测试3.jpg";
-// import img4 from "@assets/img/测试4.jpg";
-// import img5 from "@assets/img/测试5.jpg";
 
 import styles from "./index.module.less";
 
@@ -37,7 +32,7 @@ const Collect: React.FC = () => {
         //   }
         // }
       >
-        {userInfo.user_id && (
+        {userInfo.userId && (
           <View
             style={{
               textAlign: "center",
@@ -47,7 +42,7 @@ const Collect: React.FC = () => {
             暂无收藏
           </View>
         )}
-        {!userInfo.user_id && (
+        {!userInfo.userId && (
           <Button
             style={{
               textAlign: "center",

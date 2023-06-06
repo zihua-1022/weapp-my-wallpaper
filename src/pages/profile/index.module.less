@@ -1,9 +1,10 @@
 .profile{
-  padding: 28px;
+  // padding: 28px;
   &-header{
     display: flex;
     align-items: center;
     justify-content: space-between;
+    // padding-bottom: 24px;
     .image,.text{
       vertical-align: middle;
     }
@@ -13,31 +14,51 @@
     }
     .text{
       margin-left: 40px;
-      color: #fff;
+      // color: #fff;
     }
     .desc{
       margin-right: 10px;
       font-size: 24px;
-      color: #fff;
+      // color: #fff;
     }
   }
   &-main{
-    .card-content{
-      overflow: hidden;
-      height: 50px;
-      line-height: 50px;
-      .icon,.desc{
-        float: left;
-        display: inline-block;
-        // width: 50%;
-        /* 设置子元素宽度为50% */
-        // margin-right: -4px;
-        /* 去除子元素之间的间距 */
-        box-sizing: border-box;
+    margin-top: 60px;
+    margin-bottom: 150px;
+    // margin-bottom: 25px;
+    .action{
+      display: flex;
+      flex-wrap: wrap;
+      padding: 50px 0px;
+      // overflow: hidden;
+      // height: 50px;
+      // line-height: 50px;
+      &-card{
+        --n: 3;
+        --gap: calc((100% - 210px * var(--n))/var(--n)/2);
+        width: 210px;
+        height: 100%;
+        margin: 10px var(--gap);
+        :global(.card-body){
+          padding: 50px 20px;
+        }
+        .image{
+          width: 70px;
+          height: 70px;
+        }
+        .desc{
+          margin-top: 40px;
+        }
       }
-      .desc{
-        margin-left: 20px;
-      }
+      
     }
+    
+  }
+  &-footer{
+    height: 64px;
+    line-height: 64px;
+    margin-top: 25px;
+    text-align: center;
+    color: red;
   }
 }

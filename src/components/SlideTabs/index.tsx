@@ -54,7 +54,7 @@ const SlideTabs: React.FC<ISlideTabsProps & PropsWithChildren> = (props) => {
         scrollWithAnimation
         scroll-into-view={activeTabKey}
       >
-        {dataSource.length &&
+        {dataSource.length > 0 &&
           dataSource.map((item, index) => {
             console.log(activeTabKey, "item: ", item);
             return (

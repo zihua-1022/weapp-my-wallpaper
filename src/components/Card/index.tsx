@@ -1,6 +1,6 @@
 import React, { PropsWithChildren } from "react";
 import { View, Text, Image } from "@tarojs/components";
-import { AtCard } from "taro-ui";
+import classNames from "classnames";
 
 import "./index.less";
 
@@ -16,11 +16,17 @@ export interface ICardProps extends PropsWithChildren {
   imgDataSource?: IImgProps[];
   action?: IImgProps[];
   style?: {};
+  className?: string;
 }
 
-const Card: React.FC<ICardProps> = ({ imgDataSource, children, style }) => {
+const Card: React.FC<ICardProps> = ({
+  imgDataSource,
+  children,
+  className,
+  style,
+}) => {
   return (
-    <View className="card" style={style}>
+    <View className={classNames("card", className)} style={style}>
       {/* <View className="card-top"></View> */}
       <View className="card-header"></View>
       <View className="card-body">

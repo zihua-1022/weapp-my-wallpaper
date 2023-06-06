@@ -1,44 +1,34 @@
 import { useState, useEffect } from "react";
-import { useSelector } from "react-redux";
-import { RootState } from "@store/index";
 import classNames from "classnames";
-import { View, Text } from "@tarojs/components";
+import { View } from "@tarojs/components";
 import SearchBox from "@components/SearchBox";
 import CustomNavBar from "@components/CustomNavBar";
 import ImageCard from "@components/ImageCard";
-import Swiper, { IImgProps } from "@components/Swiper";
+import Swiper from "@components/Swiper";
+import { IBaseImgResult } from "@/api/model/baseModel";
 import { getDailyRecommend, getDailyPopular } from "@/api/home";
 import { serverMap } from "@/services/config";
-
-// import img1 from "@assets/img/kobe.png";
-// import img2 from "@assets/img/测试2.jpg";
-// import img3 from "@assets/img/测试3.jpg";
-// import img4 from "@assets/img/测试4.jpg";
-// import img5 from "@assets/img/测试5.jpg";
 
 // import "taro-ui/dist/style/components/button.scss"; // 按需引入
 import styles from "./index.module.less";
 
 function Home() {
-  const navBarStyle = useSelector((state: RootState) => state.navBar);
-  const [recommendImgs, setRecommendImgs] = useState<IImgProps[]>([]);
-  const [popularImgs, setPopularImgs] = useState<IImgProps[]>([]);
+  const [recommendImgs, setRecommendImgs] = useState<IBaseImgResult[]>([]);
+  const [popularImgs, setPopularImgs] = useState<IBaseImgResult[]>([]);
   const handleSearch = (keyword: string) => {
     console.log(`搜索关键词：${keyword}`);
   };
   useEffect(() => {
     getDailyRecommend().then((res) => {
-      console.log("res: ", res);
       const { status, data } = res;
       if (status) {
         const result = data.map((item) => {
           const proxy = serverMap[process.env.NODE_ENV || "default"]["static"];
-          item.path = proxy + "/" + item.path;
           return {
             ...item,
+            path: proxy + "/" + item.path,
           };
         });
-        console.log("item: ", result);
         setRecommendImgs(result);
       }
     });
@@ -47,23 +37,14 @@ function Home() {
       if (status) {
         const result = data.map((item) => {
           const proxy = serverMap[process.env.NODE_ENV || "default"]["static"];
-          item.path = proxy + "/" + item.path;
           return {
             ...item,
+            path: proxy + "/" + item.path,
           };
         });
-        console.log("item: ", result);
         setPopularImgs(result);
       }
     });
-    // const imgs = [
-    //   // { id: 1, path: img1 },
-    //   // { id: 2, path: img2 },
-    //   // { id: 3, path: img3 },
-    //   // { id: 4, path: img4 },
-    //   // { id: 5, path: img5 },
-    // ];
-    // setImgsData(imgs);
   }, []);
 
   return (
@@ -89,9 +70,9 @@ function Home() {
           style={{ padding: "0 14px 14px" }}
         >
           <View
-            style={{ margin: "12px 0", textAlign: "center", color: "#fff" }}
+            style={{ margin: "12px 0", textAlign: "center", color: "#8a2be2" }}
           >
-            -今日推荐-
+            ---------- 今日推荐 ----------
           </View>
           <ImageCard
             dataSource={popularImgs}

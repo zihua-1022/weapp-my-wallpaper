@@ -1,26 +1,12 @@
 import React, { PropsWithChildren } from "react";
 import { Swiper, SwiperItem, SwiperProps, Image } from "@tarojs/components";
+import { IBaseImgResult } from "@/api/model/baseModel";
 
-export interface IImgProps {
-  id: number;
-  name: string;
-  desc?: string;
-  size?: number;
-  resolution: string;
-  type: number;
-  tags?: string;
-  daily_recommend: number;
-  is_hot?: number;
-  path: string;
-  alt?: string;
-  style?: {};
-}
+export type TSwipersProps = SwiperProps & {
+  dataSource: IBaseImgResult[];
+};
 
-export interface IswiperProps {
-  dataSource: IImgProps[];
-}
-
-const Swipers: React.FC<SwiperProps & IswiperProps> = (props) => {
+const Swipers: React.FC<TSwipersProps & PropsWithChildren> = (props) => {
   return (
     <Swiper
       style={{ height: "180px" }}

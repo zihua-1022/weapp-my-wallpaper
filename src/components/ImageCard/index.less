@@ -1,20 +1,54 @@
 .image-card {
-    display: grid;
-    // grid-template-rows: repeat(3, 100px);
-    grid-template-columns: 30% 30% 30%;
-    row-gap: 32px;
-    column-gap: 5%;
-    box-sizing: border-box;
-    &-cover{
-        // width: 260px;
-        // margin-right: 20px;
-        // margin-bottom: 20px;
+  display: grid;
+  // grid-template-rows: repeat(3, 100px);
+  grid-template-columns: 30% 30% 30%;
+  row-gap: 26px;
+  column-gap: 5%;
+  box-sizing: border-box;
+  &-cover{
+    position: relative;
+    &-meta{
+      position: absolute;
+      padding: 35px 40px;
+      // left: 40px;
+      // top: 60px;
+      z-index: 1;
+      .title{
+        
+      }
+      .desc{
+        margin-top: 24px;
+      }
+      .btn{
+        width: 170px;
+        padding: 10px;
+        margin-top: 48px;
+        text-align: center;
+        border-radius: 35px;
+        background-color: var(--btn-background-color);
+        backdrop-filter: var(--backdrop-filter); /* 使用高斯模糊作为背景滤镜 */
+      }
     }
-    &-cover img,image{
-        display: block;
-        width: 100%;
-        border-radius: 10px;
+    .bottom-btn{
+      width: 100%;
+      position: absolute;
+      left: 0px;
+      bottom: 0px;
+      padding: 5px 0px;
+      text-align: center;
+      border-radius: 0 0 10px 10px;
+      background-color: var(--btn-background-color);
+      backdrop-filter: var(--backdrop-filter); /* 使用高斯模糊作为背景滤镜 */
     }
+    // width: 260px;
+    // margin-right: 20px;
+    // margin-bottom: 20px;
+  }
+  &-cover img,image{
+    width: 100%;
+    display: block;
+    border-radius: 10px;
+  }
 }
 
   
