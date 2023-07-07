@@ -2,11 +2,11 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import DefaultAvatar from "@assets/img/defaultAvatar.jpg";
 
 interface IProfileState {
-  avatar: string;
+  avatar?: string;
   nickName: string;
   gender?: number;
-  token: string;
-  userId: string;
+  token?: string;
+  userId?: string;
   component?: React.FC;
 }
 

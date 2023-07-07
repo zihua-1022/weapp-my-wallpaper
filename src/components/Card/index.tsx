@@ -13,6 +13,7 @@ export interface IImgProps {
 }
 
 export interface ICardProps extends PropsWithChildren {
+  title?: string;
   imgDataSource?: IImgProps[];
   action?: IImgProps[];
   style?: {};
@@ -20,6 +21,7 @@ export interface ICardProps extends PropsWithChildren {
 }
 
 const Card: React.FC<ICardProps> = ({
+  title,
   imgDataSource,
   children,
   className,
@@ -28,7 +30,7 @@ const Card: React.FC<ICardProps> = ({
   return (
     <View className={classNames("card", className)} style={style}>
       {/* <View className="card-top"></View> */}
-      <View className="card-header"></View>
+      {title && <View className="card-header"></View>}
       <View className="card-body">
         {children && <>{children}</>}
         {!children && (

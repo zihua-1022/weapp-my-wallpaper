@@ -2,12 +2,9 @@ import React, { useEffect } from "react";
 import { Provider } from "react-redux";
 import Taro from "@tarojs/taro";
 import "taro-ui/dist/style/index.scss"; // 引入组件样式 - 方式一
-// import "~styles/theme/default.scss";
 import store from "@store/index";
-import { setUserInfo } from "@/store/profile";
-import { SetNavBar } from "@/store/navBar";
-
-// import { weappLogin } from "@utils/weapp";
+import { setUserInfo } from "@store/profile";
+import { SetNavBar } from "@store/navBar";
 import { isWeapp } from "./utils/tools";
 
 import "./app.less";

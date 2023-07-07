@@ -1,83 +1,89 @@
-import { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useSelector } from "react-redux";
 import classNames from "classnames";
-import Taro from "@tarojs/taro";
-import { View, Swiper, SwiperItem } from "@tarojs/components";
+import Taro, { useRouter } from "@tarojs/taro";
+import { View, Swiper, SwiperItem, PageContainer } from "@tarojs/components";
 import CustomNavBar from "@components/CustomNavBar";
+import TabBar from "@components/TabBar";
 import SlideTabs, { IImgProps } from "@components/SlideTabs";
-import ImageCard from "@components/ImageCard";
-import { imgsListToTree } from "@utils/tools";
+import ImageCard, { TDataSource } from "@components/ImageCard";
+import ImageDetails from "@components/ImageDetails";
+import Loading from "@components/Loading";
+import store, { RootState } from "@store/index";
+import { setShowTabBar } from "@store/tabBar";
+import { TImgsTreeData, arrCompositeTree } from "@utils/tools";
 import { getCategoryTabs, getCategoryImage } from "@/api/category";
 import { serverMap } from "@/services/config";
-import { RootState } from "@store/index";
-import { IImgResultModel } from "@/api/model/baseModel";
+import { getTabBarImg } from "@assets/img/tabBar";
 // import { categoryData, ICategoryDataProps, ICategory } from "./data";
-// import "taro-ui/dist/style/components/button.scss"; // 按需引入
 import styles from "./index.module.less";
 
-function Category() {
+const Category: React.FC = () => {
+  const router = useRouter();
+  const { imgId, cid, isPhone, activeTab, viewType } = router.params;
   const navBarStyle = useSelector((state: RootState) => state.navBar);
-  const [swiperHeight, setSwiperHeight] = useState<number[]>([]);
-  const swiperItem = useRef(null);
-  const [currentTab, setCurrentTab] = useState<number>(0);
-  const [tabsData, setTabsData] = useState<IImgResultModel[]>([]);
-  const swiperChange = (e) => {
-    setCurrentTab(e.detail.current);
-  };
-  const swiperTransition = (e) => {
-    console.log(e.detail);
+  const tabsData = useSelector((state: RootState) => state.category);
+  const [imgsData, setImgsData] = useState<TImgsTreeData[]>([]);
+  const [detailsData, setDetailsData] = useState<TDataSource[]>([]);
+  const [currentTab, setCurrentTab] = useState<number>(Number(activeTab));
+  const [currentImg, setCurrentImg] = useState<number>(0);
+  const [swiperHeight, setSwiperHeight] = useState<number>(0);
+  const [categoryId, setCategoryId] = useState<string | undefined>(cid);
+  const [showPage, setShowPage] = useState(false);
+  const [loading, setLoading] = useState<boolean>(true);
+
+  const toImgsDetail = (img: TDataSource[], index: number) => {
+    setCurrentImg(index);
+    setShowPage(true);
   };
 
-  useEffect(() => {
-    // getCategoryTabs().then((res) => {
-    //   const { status, data } = res;
-    //   if (status) {
-    //     const result = data.map((item, index) => {
-    //       const proxy = serverMap[process.env.NODE_ENV || "default"]["static"];
-    //       item.path = proxy + "/" + item.path;
-    //       item.key = `tab_${index}`;
-    //       return {
-    //         ...item,
-    //       };
-    //     });
-    //     setTabsData(result);
-    //   }
-    // });
-    getCategoryImage().then((res) => {
+  const swiperChange = (e) => {
+    const { current, currentItemId } = e.detail;
+    setLoading(true);
+    setCurrentTab(current);
+    setCategoryId(currentItemId);
+    getImagesData({ isPrimary: 0, isPhone, cid: currentItemId });
+  };
+
+  const getImagesData = (params: {
+    isPrimary: number;
+    isPhone?: number | string;
+    cid?: string;
+  }) => {
+    getCategoryImage(params).then((res) => {
       const { status, data } = res;
       if (status) {
         const result = data.map((item) => {
           const proxy = serverMap[process.env.NODE_ENV || "default"]["static"];
+          const [imgWidth, imgHeight] = item.imgResolution?.split("*") || [];
           return {
             ...item,
             path: proxy + "/" + item.path,
+            imgWidth: Math.floor(
+              Number(imgWidth) * (navBarStyle.windowHeight / Number(imgHeight))
+            ),
+            imgHeight,
           };
         });
-        const imgsTree = imgsListToTree(result);
-        const totalHeight: number[] = [];
-        imgsTree.forEach((item, index) => {
-          item.key = `tab_${index}`;
-          const itemHeight = Math.ceil(item.children.length / 3) * 216 + 65;
-          const rHeight =
-            navBarStyle.windowHeight > itemHeight
-              ? navBarStyle.windowHeight - navBarStyle.totalHeight
-              : itemHeight;
-          totalHeight.push(rHeight);
-        });
-        setTabsData(imgsTree);
-        console.log("imgsTree: ", imgsTree);
-        setSwiperHeight(totalHeight);
+        setDetailsData(result);
+        const imgDataTree = arrCompositeTree(tabsData, result);
+        const swiperItemHeight = Math.ceil(result.length / 3) * 210;
+        const residueHeight =
+          navBarStyle.windowHeight - navBarStyle.totalHeight - 55;
+        const heightResult =
+          swiperItemHeight > residueHeight
+            ? swiperItemHeight + 14
+            : residueHeight;
+        setSwiperHeight(heightResult);
+        setImgsData(imgDataTree);
+        setLoading(false);
       }
     });
-    // categoryData.forEach((item) => {
-    //   const itemHeight = Math.ceil(item.data.length / 3) * 216 + 65;
-    //   const rHeight =
-    //     navBarStyle.windowHeight > itemHeight
-    //       ? navBarStyle.windowHeight - navBarStyle.totalHeight
-    //       : itemHeight;
-    //   swiperHeight.push(rHeight);
-    // });
-    // setTabsData(categoryData);
+  };
+
+  useEffect(() => {
+    // store.dispatch(setShowTabBar(false));
+    getImagesData({ isPrimary: 0, isPhone, cid });
   }, []);
 
   return (
@@ -94,39 +100,79 @@ function Category() {
         <SlideTabs
           dataSource={tabsData}
           activeTabKey={`tab_${currentTab}`}
-          changeTab={setCurrentTab}
+          changeTab={swiperChange}
           style={{ top: `${navBarStyle.totalHeight}px` }}
         ></SlideTabs>
+
         <Swiper
           style={{
-            height: `${swiperHeight[currentTab]}px`,
+            height: `${swiperHeight}px`,
           }}
           className={styles["slide-content"]}
           current={currentTab}
           onChange={swiperChange}
-          onTransition={swiperTransition}
+          // onTransition={swiperTransition}
           easing-function="easeOutCubic"
         >
-          {tabsData.length &&
-            tabsData.map((item, index) => {
+          {imgsData.length &&
+            imgsData.map((item) => {
               return (
-                <SwiperItem className="swiper-item" key={item.id}>
-                  <ImageCard
-                    // ref={}
-                    className="image-card"
-                    dataSource={item.children}
-                    style={{
-                      padding: "0 14px 14px",
-                    }}
-                    imgStyle={{ height: "200px" }}
-                  />
+                <SwiperItem
+                  className={styles["swiper-item"]}
+                  itemId={String(item.cid)}
+                  key={item.cid}
+                >
+                  {loading && (
+                    <Loading
+                      containerStyle={{
+                        height: `${
+                          navBarStyle.windowHeight -
+                          navBarStyle.totalHeight -
+                          55
+                        }px`,
+                      }}
+                    />
+                  )}
+                  {!loading && (
+                    <ImageCard
+                      style={{ padding: "0rpx 18rpx 28rpx" }}
+                      imgStyle={{
+                        width: "calc(33.3% - 10px)",
+                        height: "200px",
+                      }}
+                      className="image-card"
+                      dataSource={item.children}
+                      viewType={1}
+                      toImgsDetail={toImgsDetail}
+                    />
+                  )}
                 </SwiperItem>
               );
             })}
         </Swiper>
       </View>
+      <PageContainer
+        show={showPage}
+        duration={500}
+        position="right"
+        onAfterLeave={() => {
+          setCurrentImg(0);
+          setShowPage(false);
+          // store.dispatch(setShowTabBar(true));
+        }}
+      >
+        <ImageDetails
+          dataSource={detailsData}
+          currentImg={currentImg}
+          showDetails={showPage}
+          navigateBack={() => {
+            setShowPage(false);
+            // store.dispatch(setShowTabBar(true));
+          }}
+        />
+      </PageContainer>
     </View>
   );
-}
+};
 
 export default Category;

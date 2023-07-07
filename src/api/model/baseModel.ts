@@ -35,8 +35,9 @@ export interface IPageResultModel<T> {
 
 export interface IBaseImgResult {
   id: number;
-  imgDesc?: string;
   imgName: string;
+  imgDesc?: string;
+  imgColor?: string;
   imgResolution?: string;
   imgSize?: number;
   imgTags?: string;
@@ -48,4 +49,19 @@ export interface IBaseImgResult {
   path: string;
   createdAt?: string;
   updatedAt?: string;
+}
+
+export interface IFileParams {
+  name: string;
+  imgColor: string;
+  imgTags?: string;
+  imgType: string;
+  imgResolution: string;
+  imgSize: number;
+  path: string;
+  isHot?: number;
+  isPhone?: number;
+  isPrimary?: number;
+  isRecommend?: number;
+  cid: number;
 }

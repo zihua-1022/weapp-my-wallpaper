@@ -32,7 +32,7 @@ export type IImgProps = {
 export interface ISlideTabsProps {
   dataSource: IImgResultModel[];
   activeTabKey: string;
-  changeTab: (tabKey: number) => void;
+  changeTab: ({ detail: {} }) => void;
   style?: {};
   config?: {};
 }
@@ -42,8 +42,6 @@ const SlideTabs: React.FC<ISlideTabsProps & PropsWithChildren> = (props) => {
 
   return (
     <View className={styles["slide-tabs"]}>
-      {/* <!-- tabBar选项卡 --> */}
-
       <ScrollView
         style={style}
         className={styles["slide-box"]}
@@ -56,20 +54,17 @@ const SlideTabs: React.FC<ISlideTabsProps & PropsWithChildren> = (props) => {
       >
         {dataSource.length > 0 &&
           dataSource.map((item, index) => {
-            console.log(activeTabKey, "item: ", item);
             return (
               <View
                 className={styles["slide-tabs-item"]}
-                key={item.id}
+                key={item.cid}
                 id={item.key}
-                onClick={() => changeTab(index)}
+                onClick={() =>
+                  changeTab({
+                    detail: { current: index, currentItemId: item.cid },
+                  })
+                }
               >
-                {/* <View
-              id="idScrollLeft"
-              className="padding_lr_20 {{index===0?'padding_l_40':''}} {{index===LR_tabBar.length-1?'padding_r_40':''}}"
-              style="white-space: nowrap;"
-            >
-            </View> */}
                 <Image
                   className={styles["slide-tabs-img"]}
                   mode="aspectFill"
@@ -83,7 +78,7 @@ const SlideTabs: React.FC<ISlideTabsProps & PropsWithChildren> = (props) => {
                     styles["slide-tabs-text"]
                   )}
                 >
-                  {item.name}
+                  {item.categoryName}
                 </Text>
               </View>
             );
