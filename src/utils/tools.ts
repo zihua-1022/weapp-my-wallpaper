@@ -1,7 +1,8 @@
+import { TDataSource } from "@components/ImageCard";
 import { ICategoryResult } from "@/api/model/categoryModel";
 import { IPcImgResult } from "@/api/model/computerModel";
 
-export type TImgsTreeData = ICategoryResult & {
+export type TImgsTreeData = IPcImgResult & {
   children: IPcImgResult[];
 };
 
@@ -15,6 +16,26 @@ export const isMobile = (system: string) => {
 
 export const isWeapp = (system: string) => {
   return ["weapp"].includes(system);
+};
+
+export const arrCompositeTree = (
+  source: IPcImgResult[],
+  target: IPcImgResult[]
+): TImgsTreeData[] => {
+  console.log("target: ", target);
+  const tree = source.map((item) => {
+    // 遍历对象数组
+    let children: IPcImgResult[] = [];
+    if (item.cid === target[0].cid) {
+      // 找到每个对象的子节点x
+      children = target;
+    }
+    return {
+      ...item,
+      children,
+    };
+  });
+  return tree; //循环结束，返回结果
 };
 
 // 需要深拷贝

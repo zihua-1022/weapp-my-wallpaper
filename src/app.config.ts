@@ -6,7 +6,7 @@ export default defineAppConfig({
   usingComponents: {},
   window: {
     // backgroundTextStyle: "dark",
-    backgroundColor: "#141414",
+    // backgroundColor: "#141414",
     // navigationBarBackgroundColor: "#202123",
     // navigationBarTitleText: "WeChat",
     // navigationBarTextStyle: "black",

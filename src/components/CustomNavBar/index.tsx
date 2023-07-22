@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import { View, Image } from "@tarojs/components";
 import { RootState } from "@store/index";
 
-import logo from "@assets/img/logo.png";
+import { getImg } from "@assets/img";
 
 import "./index.less";
 
@@ -38,7 +38,13 @@ const CustomNavBar: React.FC<ICustomNavBarProps> = ({
           width: `${navBarStyle.windowWidth}px`,
         }}
       >
-        {isShowLogo && <Image className="bar-icon" src={logo}></Image>}
+        {isShowLogo && (
+          <Image
+            className="bar-icon"
+            src={getImg("logo")}
+            mode="aspectFit"
+          ></Image>
+        )}
         {children}
       </View>
     </View>

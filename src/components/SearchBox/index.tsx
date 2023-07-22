@@ -1,6 +1,6 @@
 import React, { useState, PropsWithChildren } from "react";
 import { View, Input, Image } from "@tarojs/components";
-import SearchBtn from "@assets/img/search.png";
+import { getImg } from "@assets/img";
 
 import "./index.less";
 
@@ -28,7 +28,7 @@ const SearchBox: React.FC<ISearchBoxProps & PropsWithChildren> = ({
         onInput={handleSearchInput}
       />
       {/* <View className="search-btn"> */}
-      <Image className="search-btn" src={SearchBtn}></Image>
+      <Image className="search-btn" src={getImg("searchButton")}></Image>
       {/* </View> */}
     </View>
   );

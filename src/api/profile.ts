@@ -1,4 +1,5 @@
-import request from "@services/index";
+import service, { request } from "@services/index";
+import { IFileParams } from "./model/baseModel";
 import { IGetUserInfoParams, IGetUserInfoModel } from "./model/profileModel";
 
 /**
@@ -11,6 +12,19 @@ export const getUserInfo = (params: IGetUserInfoParams) => {
     url: `weapp/account/user-info/${id}`,
     method: "get",
     data: { id },
+    // option: 1,
+  });
+};
+
+export const uploadFile = (params: IFileParams[]) => {
+  console.log("params: ", params);
+  return request<IGetUserInfoModel>({
+    url: `weapp/v1/account/uplaod-file`,
+    method: "post",
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+    data: params,
     // option: 1,
   });
 };
