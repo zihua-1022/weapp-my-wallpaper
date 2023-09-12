@@ -1,7 +1,10 @@
 import Taro from "@tarojs/taro";
 import { getToken, getWeappToken, getOpenId } from "@/api/index";
 import store from "@store/index";
-import { initialState, setUserInfo } from "@/store/profile";
+import { initialState, setUserInfo } from "@store/profile";
+import { serverMap } from "../services/config";
+
+const proxy = serverMap[process.env.NODE_ENV || "default"]["static"];
 
 export interface IUserProfile {
   encryptedData: string;
@@ -13,6 +16,103 @@ export interface IUserProfile {
     nickName: string;
   };
 }
+
+export type TFile = {
+  id: string | number;
+  name?: string;
+  path?: string;
+  size?: number;
+  width?: number;
+  height?: number;
+  imgType?: string;
+  url: string;
+  info?: {};
+  file?: {
+    path: string;
+    size: number;
+  };
+};
+
+export const uploadFile = (
+  files: TFile[],
+  callback?: (data: string[]) => void
+) => {
+  const uploadRes: string[] = [];
+  return new Promise((resolve, reject) => {
+    files.forEach((file, index) => {
+      Taro.uploadFile({
+        url: `${proxy}/v1/upload/file`, // 上传图片的服务器接口地址
+        filePath: file.url,
+        name: "image", // 服务器接收图片的字段名
+        formData: file.info,
+        success: (res) => {
+          if (res.statusCode === 200) {
+            // 上传成功
+            console.log("上传成功", res);
+            uploadRes.push(res.data);
+            if (files.length === uploadRes.length) {
+              resolve(res.data);
+              if (callback) {
+                callback(uploadRes);
+              }
+            }
+          } else {
+            // 上传失败
+            console.log("上传失败", res);
+            reject("上传失败");
+            if (callback) {
+              callback(uploadRes);
+            }
+          }
+        },
+        fail: (err) => {
+          // 上传出错
+          console.log("上传出错", err);
+          reject(err);
+          // uploadRes.push("上传出错");
+        },
+      });
+    });
+  });
+};
+
+export const downloadFile = (path: string) => {
+  return new Promise((resolve, reject) => {
+    Taro.downloadFile({
+      url: path, // 图片的 URL
+      success: (res) => {
+        if (res.statusCode === 200) {
+          // 下载成功，res.tempFilePath 为下载后的临时文件路径
+          Taro.saveImageToPhotosAlbum({
+            filePath: res.tempFilePath,
+            success: () => {
+              resolve("保存成功");
+            },
+            fail: ({ errMsg }) => {
+              reject(errMsg);
+            },
+          });
+        } else {
+          reject("下载失败");
+          // 下载失败
+          console.log("下载失败", res);
+        }
+      },
+      fail: (err) => {
+        reject(err);
+      },
+    });
+  });
+};
+
+export const updateUserNickName = (nickName: string) => {
+  const weappUserInfo = Taro.getStorageSync("userInfo");
+  Taro.setStorageSync("userInfo", {
+    ...weappUserInfo,
+    nickName,
+  });
+  store.dispatch(setUserInfo({ nickName }));
+};
 
 // 检查登录是否失效
 export const checkUserLogin = async () => {
@@ -33,10 +133,10 @@ export const weappLogin = (params: {}) => {
       if (code) {
         try {
           const userInfo = {};
-          const weappUserInfo = await getToken({ code, data: params });
+          const weappUserInfo = await getToken({ code, userInfo: params });
+          console.log("weappUserInfo: ", weappUserInfo);
           if (!weappUserInfo.status) return;
           Object.assign(userInfo, weappUserInfo.data);
-          Taro.setStorageSync("userInfo", weappUserInfo.data);
           const weappToken = await getWeappToken();
           console.log("weappToken: ", weappToken);
           if (weappToken.status) {
