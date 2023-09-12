@@ -19,15 +19,15 @@ export interface IStatusCode {
 export const serverMap = {
   development: {
     weapp: "http://localhost:3000",
-    static: "http://localhost:3000",
+    static: "http://localhost:3000/static",
   },
   production: {
     weapp: "https://m.zihua1022.icu",
-    static: "https://m.zihua1022.icu",
+    static: "https://m.zihua1022.icu/static",
   },
   default: {
     weapp: "http://localhost:3000",
-    static: "http://localhost:3000",
+    static: "http://localhost:3000/static",
   },
 };
 

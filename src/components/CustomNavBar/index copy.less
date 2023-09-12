@@ -1,11 +1,6 @@
 .navbar-fixed{
   width: 100%;
-  position: fixed;
-  top: 0;
-  left: 0;
-  opacity: 0.8;
-  z-index: 100;
-  background-color: #202123;
+  background-color: var(--background-color);
   .bar{
     // &-status{
     // }
@@ -19,8 +14,9 @@
       position: relative;
     }
     &-icon{
-      width: 60px;
+      width: 100px;
       height: 60px;
+      border-radius: 16px;
     }
   }
 }

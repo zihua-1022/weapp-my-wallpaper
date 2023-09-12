@@ -1,6 +1,11 @@
 .navbar-fixed{
   width: 100%;
-  background-color: var(--background-color);
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 100;
+  background-color: rgba(20,20,20,0.6);
+  backdrop-filter: blur(10px); 
   .bar{
     // &-status{
     // }
@@ -9,13 +14,17 @@
       align-items: center;
       justify-content: flex-start;
       height: 45px;
-      padding: 0 20px 0 30px;
       box-sizing: border-box;
       position: relative;
     }
     &-icon{
-      width: 60px;
+      width: 100px;
       height: 60px;
+      padding-left: 30px;
+    }
+    &-title{
+      // font-weight: 600;
+      margin: 0 auto;
     }
   }
 }

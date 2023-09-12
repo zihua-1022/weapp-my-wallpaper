@@ -4,32 +4,78 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
+    margin: 0px 10px;
     // padding-bottom: 24px;
-    .image,.text{
-      vertical-align: middle;
+    .header{
+      &-left{
+        .avatar-wrapper{
+          padding: 0px;
+          background-color: var(--background-color);
+          // border-radius: 10px;
+          &::after {
+            border: none;
+            outline: none;
+          }
+        }
+        .avatar{
+          width: 140px;
+          height: 140px;
+          display: block;
+          float: left;
+          border-radius: 10px;
+        }
+        .input-nickname{
+          width: 300px;
+          height: 140px;
+          padding-left: 40px;
+          text-align: left;
+          color: var(--text-color);
+        }
+        .nickname{
+          height: 140px;
+          float: left;
+          margin-left: 40px;
+          line-height: 140px;
+          color: var(--text-color);
+        }
+      }
+      &-right{
+        .desc{
+          margin-right: 10px;
+          font-size: 24px;
+          // color: #fff;
+        }
+      }
     }
-    .image{
-      width: 140px;
-      height: 140px;
-    }
-    .text{
-      margin-left: 40px;
-      // color: #fff;
-    }
-    .desc{
-      margin-right: 10px;
-      font-size: 24px;
-      // color: #fff;
-    }
+    // .text{
+    //   margin-left: 40px;
+    //   // color: #fff;
+    // }
+    
   }
   &-main{
-    margin-top: 60px;
-    margin-bottom: 150px;
+    min-height: 950px;
+    margin-top: 50px;
     // margin-bottom: 25px;
+    .integral{
+      margin-top: 30px;
+      margin-bottom: 18px;
+      :global(.card-body){
+        padding: 50px 20px;
+      }
+      .icon{
+        width: 70px;
+        height: 70px;
+      }
+      .desc{
+        margin-top: 40px;
+      }
+    }
     .action{
       display: flex;
       flex-wrap: wrap;
-      padding: 50px 0px;
+      padding-top: 20px;
+      padding-bottom: 50px;
       // overflow: hidden;
       // height: 50px;
       // line-height: 50px;
@@ -42,8 +88,34 @@
         :global(.card-body){
           padding: 50px 20px;
         }
-        .image{
-          width: 70px;
+        .button-invite{
+          padding: 50px 20px;
+          // height: 78px;
+          color: var(--text-color);
+          border-radius: 24px;
+          background-color: var(--card-background-color);
+          &::after {
+            border: none;
+            outline: none;
+          }
+          .text{
+            margin-top: 16px;
+            line-height: 42px;
+            font-size: 32px;
+          }
+        }
+        .about-us{
+          padding: 50px 20px;
+          text-align:center;
+          border-radius: 24px;
+          background-color: var(--card-background-color);
+          .logo{
+            width: 160px;
+            height: 70px;
+          }
+        }
+        .icon{
+          width: 75px;
           height: 70px;
         }
         .desc{
@@ -58,7 +130,8 @@
     height: 64px;
     line-height: 64px;
     margin-top: 25px;
+    padding-bottom: 158px;
     text-align: center;
-    color: red;
+    color: var(--polish-color);
   }
 }
