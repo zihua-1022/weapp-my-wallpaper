@@ -28,24 +28,48 @@ export interface IPageParams {
   pageSize: number;
 }
 
-export interface IPageResultModel<T> {
-  items: T[];
+export interface IPageResult<T> {
+  value: T[];
   total: number;
 }
 
-export interface IBaseImgResult {
-  id: number;
-  imgDesc?: string;
-  imgName: string;
+export interface IImgInfoParams {
+  imgName?: string;
   imgResolution?: string;
   imgSize?: number;
+  dSize?: number;
+  path: string;
+  dPath?: string;
+  imgProperty?: string | number;
+  isRecommend?: string | number;
+  isPrimary?: string | number;
+  isHot?: string | number;
+  userId?: string;
+  imgColor?: string;
+  imgDesc?: string;
   imgTags?: string;
   imgType?: string;
-  isHot: number;
-  isPhone: number;
-  isPrimary: number;
-  isRecommend: number;
-  path: string;
+  cid?: number;
+}
+
+export interface IBaseImgResult extends IImgInfoParams {
+  id: number;
+  key?: string;
   createdAt?: string;
   updatedAt?: string;
+}
+
+export interface IFileParams {
+  name: string;
+  imgColor: string;
+  imgTags?: string;
+  imgType: string;
+  imgResolution: string;
+  imgSize: number;
+  path: string;
+  isHot?: number;
+  imgProperty?: number;
+  isPrimary?: number;
+  isRecommend?: number;
+  cid: number;
 }
