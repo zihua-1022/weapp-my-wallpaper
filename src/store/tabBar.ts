@@ -1,6 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 interface ITabBarState {
+  showTabBar: boolean;
   currentTab: number;
   tabs: {
     key?: number;
@@ -13,6 +14,7 @@ interface ITabBarState {
 }
 
 const initialState: ITabBarState = {
+  showTabBar: true,
   currentTab: 0,
   tabs: [],
 };
@@ -21,15 +23,21 @@ export const tabBarSlice = createSlice({
   name: "tabBar",
   initialState,
   reducers: {
+    setShowTabBar: (state, action: PayloadAction<boolean>) => {
+      state.showTabBar = action.payload;
+      return state;
+    },
     setCurrentTab: (state, action: PayloadAction<number>) => {
       state.currentTab = action.payload;
+      return state;
     },
     setTabs: (state, action: PayloadAction<ITabBarState["tabs"]>) => {
       state.tabs = action.payload;
+      return state;
     },
   },
 });
 
-export const { setCurrentTab, setTabs } = tabBarSlice.actions;
+export const { setShowTabBar, setCurrentTab, setTabs } = tabBarSlice.actions;
 
 export default tabBarSlice.reducer;

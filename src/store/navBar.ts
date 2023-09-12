@@ -5,7 +5,7 @@ interface INavBarState {
   statusBarHeight: number; // 状态栏高度
   navBarHeight: number; // 导航栏高度
   windowWidth: number;
-  windowHeight: number;
+  windowHeight: number; // 状态栏+导航栏总高度
   navStyle?: string;
   navOpacity?: number;
   navInpWid?: number;
@@ -13,10 +13,15 @@ interface INavBarState {
   widRemain?: number;
   scrollTop?: number;
   imgOpacity?: number;
+  menuButton: {
+    width: number;
+    height: number;
+    left: number;
+  }; // 胶囊
 }
 
 const initialState: INavBarState = {
-  totalHeight: 80, // 总高度
+  totalHeight: 80, // 状态栏+导航栏总高度
   statusBarHeight: 25, // 状态栏高度
   navBarHeight: 45, // 导航栏高度
   windowWidth: 375,
@@ -28,6 +33,11 @@ const initialState: INavBarState = {
   widRemain: 0,
   scrollTop: 0,
   imgOpacity: 1,
+  menuButton: {
+    width: 0,
+    height: 0,
+    left: 0,
+  },
 };
 
 export const navBarSlice = createSlice({
@@ -36,6 +46,7 @@ export const navBarSlice = createSlice({
   reducers: {
     SetNavBar: (state, action: PayloadAction<INavBarState>) => {
       Object.assign(state, action.payload);
+      return state;
     },
   },
 });

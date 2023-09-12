@@ -1,16 +1,9 @@
 import React, { PropsWithChildren, useState } from "react";
+import { useSelector } from "react-redux";
 import classNames from "classnames";
-import {
-  Swiper,
-  SwiperItem,
-  ScrollView,
-  View,
-  Image,
-  Text,
-} from "@tarojs/components";
-import { IImgResultModel } from "@/api/model/baseModel";
-// import Swiper from "../Swiper";
-// import img1 from "@assets/img/kobe.png";
+import { ScrollView, View, Image, Text } from "@tarojs/components";
+import { RootState } from "@store/index";
+import { IPcImgResult } from "@/api/model/computerModel";
 
 import styles from "./index.module.less";
 
@@ -30,46 +23,43 @@ export type IImgProps = {
 };
 
 export interface ISlideTabsProps {
-  dataSource: IImgResultModel[];
-  activeTabKey: string;
-  changeTab: (tabKey: number) => void;
-  style?: {};
+  dataSource: IPcImgResult[];
+  activeTabKey: number;
+  changeTab: ({ detail: {} }) => void;
   config?: {};
 }
 
 const SlideTabs: React.FC<ISlideTabsProps & PropsWithChildren> = (props) => {
-  const { activeTabKey, dataSource, changeTab, children, style } = props;
+  const navBarStyle = useSelector((state: RootState) => state.navBar);
+  const { activeTabKey, dataSource, changeTab, children } = props;
 
   return (
     <View className={styles["slide-tabs"]}>
-      {/* <!-- tabBar选项卡 --> */}
-
       <ScrollView
-        style={style}
+        style={{ top: `${navBarStyle.totalHeight}px`, flexDirection: "row" }}
         className={styles["slide-box"]}
-        enhanced
-        // paging-enabled
-        fast-deceleration
         scrollX
+        enhanced
+        enable-flex
+        scroll-left={activeTabKey * 100 - 20}
+        show-scrollbar={false}
+        fast-deceleration
         scrollWithAnimation
-        scroll-into-view={activeTabKey}
+        // scroll-into-view={`tab_${activeTabKey}`}
       >
         {dataSource.length > 0 &&
           dataSource.map((item, index) => {
-            console.log(activeTabKey, "item: ", item);
             return (
               <View
                 className={styles["slide-tabs-item"]}
-                key={item.id}
+                key={item.cid}
                 id={item.key}
-                onClick={() => changeTab(index)}
+                onClick={() =>
+                  changeTab({
+                    detail: { current: index, currentItemId: item.cid },
+                  })
+                }
               >
-                {/* <View
-              id="idScrollLeft"
-              className="padding_lr_20 {{index===0?'padding_l_40':''}} {{index===LR_tabBar.length-1?'padding_r_40':''}}"
-              style="white-space: nowrap;"
-            >
-            </View> */}
                 <Image
                   className={styles["slide-tabs-img"]}
                   mode="aspectFill"
@@ -77,13 +67,13 @@ const SlideTabs: React.FC<ISlideTabsProps & PropsWithChildren> = (props) => {
                 />
                 <Text
                   className={classNames(
-                    item.key === activeTabKey
+                    item.key === `tab_${activeTabKey}`
                       ? styles["slide-tabs-active"]
                       : "",
                     styles["slide-tabs-text"]
                   )}
                 >
-                  {item.name}
+                  {item.categoryName}
                 </Text>
               </View>
             );

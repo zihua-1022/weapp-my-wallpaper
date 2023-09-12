@@ -1,29 +1,34 @@
 .computer{
-  &-category-card{
-    &:not(:last-child){
-      margin-bottom: 40px;
-    }
-    .category-desc{
-      display: flex;
-      margin-bottom: 24px;
-      .title{
-        margin-bottom: 8px;
-        font-size: 36px;
+  &-main{
+    .category-card{
+      &:not(:last-child){
+        margin-bottom: 40px;
       }
-      .subtitle{
-        font-size: 28px;
-      }
-      .btn{
-        width: 120px;
-        padding: 5px;
-        margin: auto;
-        margin-right: 0px;
-        text-align: center;
-        font-size: 28px;
-        border-radius: 35px;
-        background-color: var(--btn-background-color);
-        backdrop-filter: var(--backdrop-filter); /* 使用高斯模糊作为背景滤镜 */
+      .category-desc{
+        display: flex;
+        margin: 10px 10px 20px;
+        .title{
+          margin-bottom: 4px;
+          font-size: 36px;
+        }
+        .subtitle{
+          color: var(--text-color-secondary);
+          // font-size: 28px;
+        }
+        .btn{
+          width: 120px;
+          padding: 5px;
+          margin: auto;
+          margin-right: 0px;
+          text-align: center;
+          font-size: 28px;
+          border-radius: 35px;
+          color: var(--text-color-secondary);
+          background-color: var(--btn-background-color);
+          backdrop-filter: var(--backdrop-filter); /* 使用高斯模糊作为背景滤镜 */
+        }
       }
     }
   }
+ 
 }

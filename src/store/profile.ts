@@ -1,19 +1,17 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import DefaultAvatar from "@assets/img/defaultAvatar.jpg";
+import { getProfileImg } from "@assets/img/profile";
 
 interface IProfileState {
-  avatar: string;
+  avatar?: string;
   nickName: string;
   gender?: number;
-  token: string;
+  token?: string;
   userId: string;
   component?: React.FC;
 }
 
 export const initialState: IProfileState = {
-  // avatar:
-  //   "https://thirdwx.qlogo.cn/mmopen/vi_32/POgEwh4mIHO4nibH0KlMECNjjGxQUq24ZEaGT4poC6icRiccVGKSyXwibcPq4BWmiaIGuG1icwxaQX6grC9VemZoJ8rg/132",
-  avatar: DefaultAvatar,
+  avatar: getProfileImg("defaultAvatar"),
   nickName: "",
   gender: 0,
   token: "",
