@@ -1,6 +1,7 @@
 const routerConfig = require("./router");
 
 export default defineAppConfig({
+  entryPagePath: "pages/home/index",
   pages: routerConfig.pagesConfig,
   tabBar: routerConfig.tabBarConfig,
   usingComponents: {},
@@ -11,6 +12,7 @@ export default defineAppConfig({
     // navigationBarTitleText: "WeChat",
     // navigationBarTextStyle: "black",
     navigationStyle: "custom",
+    onReachBottomDistance: 10,
   },
   darkmode: true, // 添加这一行
 });

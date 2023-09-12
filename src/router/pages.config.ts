@@ -4,7 +4,8 @@ const pagesConfig = [
   "pages/computer/index",
   "pages/profile/index",
   "pages/category/index",
-  "pages/collect/index",
+  // "pages/collect/index",
+  "pages/details/index",
 ];
 
 module.exports = pagesConfig;

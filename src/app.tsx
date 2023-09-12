@@ -2,12 +2,9 @@ import React, { useEffect } from "react";
 import { Provider } from "react-redux";
 import Taro from "@tarojs/taro";
 import "taro-ui/dist/style/index.scss"; // 引入组件样式 - 方式一
-// import "~styles/theme/default.scss";
 import store from "@store/index";
-import { setUserInfo } from "@/store/profile";
-import { SetNavBar } from "@/store/navBar";
-
-// import { weappLogin } from "@utils/weapp";
+import { setUserInfo } from "@store/profile";
+import { SetNavBar } from "@store/navBar";
 import { isWeapp } from "./utils/tools";
 
 import "./app.less";
@@ -29,6 +26,11 @@ const App = (props: IProps) => {
           navBarHeight: 42,
           windowWidth: info.windowWidth,
           windowHeight: info.windowHeight,
+          menuButton: {
+            width: 0,
+            height: 0,
+            left: 0,
+          },
         })
       );
       return;
@@ -37,6 +39,7 @@ const App = (props: IProps) => {
     // h5 app mp-alipay
     // 获取胶囊的位置
     const menuButtonInfo = Taro.getMenuButtonBoundingClientRect();
+    console.log("menuButtonInfo: ", menuButtonInfo);
     const statusBarHeight = info.statusBarHeight ?? 0;
     const userInfo = Taro.getStorageSync("userInfo");
     // const { avatar, nickname, token, user_id } = userInfo;
@@ -62,6 +65,11 @@ const App = (props: IProps) => {
         widRemain: (info.windowWidth / 375) * 70,
         // scrollTop: 0,
         // imgOpacity: 1,
+        menuButton: {
+          width: menuButtonInfo.width,
+          height: menuButtonInfo.height,
+          left: menuButtonInfo.left,
+        },
       })
     );
     store.dispatch(setUserInfo(userInfo));
